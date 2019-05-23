@@ -1,0 +1,107 @@
+server:
+  port: 8090
+spring:
+  profiles: local
+  application:
+    name: demo
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  ##全部采集
+  sleuth:
+    sampler:
+      probability: 1.0
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    inetutils:
+      preferred-networks:   ##执行器暴露的ip网段，如有docker时，网段显示多个，需要选择
+    #consul:
+    #  host: localhost
+    #  port: 8500
+    #  discovery:
+    #    serviceName: ${spring.application.name}
+    #    healthCheckPath: /actuator/health
+    #    healthCheckInterval: 15s
+    #    tags: version=1.0, author
+    #    instanceId: ${spring.application.name}:${spring.application.instance_id:${spring.application.instance_id:${random.value}}}
+    #    prefer-ip-address: true
+  # redis 配置
+  redis:
+    host: 120.55.46.47
+    password:
+    port: 6379
+    #cluster:
+    #  nodes: 192.168.68.100:7000,192.168.68.100:7001,192.168.68.101:7000,192.168.68.101:7001,192.168.68.102:7000,192.168.68.102:7001
+    timeout: 6000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    database: 0
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+
+
+
+
+# 数据源配置
+datasource:
+  readSize: 1
+  type: com.mchange.v2.c3p0.ComboPooledDataSource
+  master:
+    jdbcUrl: jdbc:mysql://111.231.221.195:3306/my
+    driverClass: com.mysql.cj.jdbc.Driver
+    user: ml
+    password: 123
+    initialPoolSize: 1
+    #连接池中保留的最小连接数
+    minPoolSize: 1
+    #连接池中保留的最大连接数,Default: 15
+    maxPoolSize: 3
+    #最大空闲时间,9个小时内未使用则连接被丢弃。若为0则永不丢弃。Default: 0
+    maxIdleTime: 32400
+    #每60秒检查所有连接池中的空闲连接。Default: 0
+    idleConnectionTestPeriod: 60
+    #定义在从数据库获取新连接失败后重复尝试的次数。Default: 30
+    acquireRetryAttempts: 30
+    #true表示pool向数据库请求连接失败后标记整个pool为block并close，就算后端数据库恢复正常也不进行重连
+    breakAfterAcquireFailure: false
+    #true表示在每次从pool内checkout连接的时候测试其有效性，这是个同步操作，因此应用端的每次数据库调用，都会先通过测试sql测试其有效性
+    testConnectionOnCheckout: false
+  slave1:
+    jdbcUrl: jdbc:mysql://111.231.221.195:3306/my
+    driverClass: com.mysql.cj.jdbc.Driver
+    user: ml
+    password: 123
+    initialPoolSize: 1
+    minPoolSize: 1
+    maxPoolSize: 3
+    maxIdleTime: 32400
+    idleConnectionTestPeriod: 60
+    acquireRetryAttempts: 30
+    breakAfterAcquireFailure: false
+    testConnectionOnCheckout: false
+
+snowflake:
+  work:
+    id: 1
+#控制swagger-ui是否显示
+swagger:
+  show: true
+
+
+# MQ Message
+mq:
+  message:
+    groupId: GID-hwariot-mall
+    accessKey: LTAIcuQa5S2Y7478
+    secretKey: JLtL9YOQ3O7kknMyWsfAqvksNSz80n
+    url: http://onsaddr-internet.aliyun.com/rocketmq/nsaddr4client-internet

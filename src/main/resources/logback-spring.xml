@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <!-- ****************RollingFileAppender**************************************** -->
+    <appender name="logger" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/var/log/hwariot/hwariot-mall-service/hwariot-mall-service.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>/var/log/hwariot/hwariot-mall-service/hwariot-mall-service-%d{yyyy-MM-dd}.%i.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%level [%c{5}] [%t] [%date{yyyy-MM-dd HH:mm:ss}] %5p - %m %n</Pattern>
+        </layout>
+    </appender>
+
+    <!-- ****************AsyncAppender 日志线程管理**************************************** -->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="logger" />
+        <queueSize>100000</queueSize>
+        <discardingThreshold>20</discardingThreshold>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%c{5}] [%t] [%date{yyyy-MM-dd HH:mm:ss}] %5p - %m %n
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- ****************logger**************************************** -->
+    <root level="INFO" additivity="false">
+        <appender-ref ref="ASYNC" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+    <logger name="com.hwariot" level="DEBUG" additivity="false">
+        <appender-ref ref="ASYNC" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="com.netflix" level="DEBUG" additivity="false">
+        <appender-ref ref="ASYNC" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+</configuration>
