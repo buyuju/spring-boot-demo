@@ -19,7 +19,7 @@ public class MyLock {
     }
 
     public static void main(String[] args) {
-        new ReentrantLock().lock();
+        new StringBuilder("2").append(1);
     }
 
     /**

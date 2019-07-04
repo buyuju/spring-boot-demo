@@ -66,6 +66,8 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile 'junit:junit:4.12'
 	compile group: 'org.dom4j', name: 'dom4j', version: '2.1.0'
+
+	compile group: 'io.netty', name: 'netty-all', version: '5.0.0.Alpha1'
 }
 
 dependencyManagement {
